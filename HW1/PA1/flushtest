@@ -1,4 +1,4 @@
-cd $1
+cd $*
 ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 --complement
 ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 | tee ../.tempfile | fgrep S | wc -l > ../.count
 cat ../.tempfile | fgrep D | wc -l >> ../.count
