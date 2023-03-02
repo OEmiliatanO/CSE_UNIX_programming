@@ -1,7 +1,9 @@
 cd $1
 ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 --complement
-ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 > ../tempfile | fgrep S | wc -l > ../Sc
-cat ../tempfile | fgrep D | wc -l > ../Dc
-cat ../tempfile | fgrep H | wc -l > ../Hc
-cat ../tempfile | fgrep C | wc -l > ../Cc
-
+ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 > ../.tempfile && cat ../.tempfile | fgrep S | wc -l > ../.count
+cat ../.tempfile | fgrep D | wc -l >> ../.count
+cat ../.tempfile | fgrep H | wc -l >> ../.count
+cat ../.tempfile | fgrep C | wc -l >> ../.count
+echo "Flush!\nFlush!\nFlush!\nFlush!\n" > ../.flush_tmp
+paste ../.count ../.flush_tmp | fgrep 5 | cut -c 1,2 --complement
+rm -rf ../.tmpfile ../.flush_tmp ../.count
