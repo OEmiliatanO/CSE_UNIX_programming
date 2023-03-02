@@ -6,4 +6,4 @@ cat ../.tempfile | fgrep H | wc -l >> ../.count
 cat ../.tempfile | fgrep C | wc -l >> ../.count
 echo "Flush!\nFlush!\nFlush!\nFlush!\n" > ../.flush_tmp
 paste ../.count ../.flush_tmp | fgrep 5 | cut -c 1,2 --complement
-rm -rf ../.tmpfile ../.flush_tmp ../.count
+rm -rf ../.tempfile ../.flush_tmp ../.count
