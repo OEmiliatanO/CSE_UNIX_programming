@@ -1,6 +1,6 @@
 cd $1
 ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 --complement
-ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 > ../.tempfile && cat ../.tempfile | fgrep S | wc -l > ../.count
+ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 | tee ../.tempfile | fgrep S | wc -l > ../.count
 cat ../.tempfile | fgrep D | wc -l >> ../.count
 cat ../.tempfile | fgrep H | wc -l >> ../.count
 cat ../.tempfile | fgrep C | wc -l >> ../.count
