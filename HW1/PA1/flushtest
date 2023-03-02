@@ -1,0 +1,7 @@
+cd $1
+ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 --complement
+ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 > ../tempfile | fgrep S | wc -l > ../Sc
+cat ../tempfile | fgrep D | wc -l > ../Dc
+cat ../tempfile | fgrep H | wc -l > ../Hc
+cat ../tempfile | fgrep C | wc -l > ../Cc
+
