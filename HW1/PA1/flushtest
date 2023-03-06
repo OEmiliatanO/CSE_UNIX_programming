@@ -1,4 +1,4 @@
-cd $1
+cd $*
 ls ./ | xargs -l fgrep ../allcards -e | cut -c 1,2 --complement
 ls *S 2>/dev/null | wc -l >> .count
 ls *D 2>/dev/null | wc -l >> .count
