@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/tcsh
 #The line above here will be the first line of your PA2 script. You can change
 #the path, however, if your tcsh file is in a different place.
 
@@ -30,15 +30,15 @@ cd $1
 #PA1 lines #2-6
 #The next 5 lines are the same in PA2 as they were in PA1 (so copy these lines):
 ls ?? | xargs -l fgrep ../allcards -e | cut --complement -c 1-2
-ls ?H 2>/dev/null | wc -l > ___tempfile1
-ls ?C 2>/dev/null | wc -l >> ___tempfile1
-ls ?D 2>/dev/null | wc -l >> ___tempfile1
-ls ?S 2>/dev/null | wc -l >> ___tempfile1
+#ls ?H 2>/dev/null | wc -l > ___tempfile1
+#ls ?C 2>/dev/null | wc -l >> ___tempfile1
+#ls ?D 2>/dev/null | wc -l >> ___tempfile1
+#ls ?S 2>/dev/null | wc -l >> ___tempfile1
 
-#ls ?H |& wc -l >  ___tempfile1
-#ls ?C |& wc -l >> ___tempfile1
-#ls ?D |& wc -l >> ___tempfile1
-#ls ?S |& wc -l >> ___tempfile1
+ls ?H |& fgrep -v : | wc -l >  ___tempfile1
+ls ?C |& fgrep -v : | wc -l >> ___tempfile1
+ls ?D |& fgrep -v : | wc -l >> ___tempfile1
+ls ?S |& fgrep -v : | wc -l >> ___tempfile1
 #cat ___tempfile1
 
 #PA1 lines #7-9
@@ -50,8 +50,8 @@ ls ?S 2>/dev/null | wc -l >> ___tempfile1
 #In PA2, however, we now know about command coordination with || and &&. This
 #will allow us to only print "Flush!" if there is a "5" in the tempfile. So,
 #on the following line you must achieve printing Flush! using only fgrep & echo:
-fgrep 5 ___tempfile1 &>/dev/null && echo Flush!
-#fgrep 5 ___tempfile1 && echo Flush!
+#fgrep 5 ___tempfile1 &>/dev/null && echo Flush!
+fgrep 5 ___tempfile1 |& cat>/dev/null && echo Flush!
 
 #That is the end of the section that is like PA1. Now for the new behavior:
 #In PA2, we do not only check for flushes (all cards being one suit). We also
@@ -80,8 +80,8 @@ fgrep 5 ___tempfile1 &>/dev/null && echo Flush!
 #
 #As I said above, you will need 2 lines of code to accomplish this. The first
 #line is for all cards from 2 to 9:
-ls [2-9][CSHD] 2>/dev/null | cut -c 1 > faces 2>/dev/null
-#ls [2-9][CSHD] |& cut -c 1 > faces
+#ls [2-9][CSHD] 2>/dev/null | cut -c 1 > faces 2>/dev/null
+ls [2-9][CSHD] |& fgrep -v : | cut -c 1 > faces
 
 #The second line is for the ten, jack, queen, king and ace. This line is harder,
 #because the letters for these cards need to be converted to numbers. To make
@@ -92,8 +92,8 @@ ls [2-9][CSHD] 2>/dev/null | cut -c 1 > faces 2>/dev/null
 #and that does not give us many ways to put something in from of each line of
 #input. The answer is to use "cat -n" to put a "\t" in front of each line (along
 #with some other things that "cat -n" will insert, but that you can then remove.
-ls [TJQKA][CSHD] 2>/dev/null | cat -n | tr "\tTJQKA" "101234" | cut -c 7,8  >> faces
-#ls [TJQKA][CSHD] |& cat -n | tr "\tTJQKA" "101234" | cut -c 7,8  >> faces
+#ls [TJQKA][CSHD] 2>/dev/null | cat -n | tr "\tTJQKA" "101234" | cut -c 7,8  >> faces
+ls [TJQKA][CSHD] |& fgrep -v : | cat -n | tr "\tTJQKA" "101234" | cut -c 7,8  >> faces
 
 #Now that we have a list of faces, we can analyze which cards match each other.
 #To this end, we wish to create a file, facecounts, that contains a list of
@@ -116,35 +116,36 @@ uniq -c faces | cut -c 7 > facecounts
 # The next line controls whether to print "One pair!"
 # Hint: In this case facecounts would have 4 lines.
 # Hint: expr understands the "==" operator.
-expr `cat facecounts | grep 2 | wc -l` = 1 &> /dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 4 &>/dev/null && echo One pair!
-#expr `cat facecounts | grep 2 | wc -l` = 1 && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 4 && echo One pair!
+#expr `cat facecounts | grep 2 | wc -l` = 1 &> /dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 4 &>/dev/null && echo One pair!
+expr `cat facecounts | grep 2 | wc -l` = 1 |& cat >/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 4 |& cat >/dev/null && echo One pair!
 #cat facecounts | grep 2 | wc -l | grep 1 -q && expr `wc -l facecounts` = 4 && echo one pair!
 
 # The next line controls whether to print "Two pair!"
 # Hint: In this case facecounts would have 3 lines. <= But so would 3-of-a-kind
 # Hint: facecounts would have a '2'
-expr `cat facecounts | grep 2 | wc -l` = 2 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 &>/dev/null && echo Two pair!
-#expr `cat facecounts | grep 2 | wc -l` = 2 && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 && echo Two pair!
+#expr `cat facecounts | grep 2 | wc -l` = 2 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 &>/dev/null && echo Two pair!
+expr `cat facecounts | grep 2 | wc -l` = 2 |& cat >/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 |& cat >/dev/null && echo Two pair!
 #cat facecounts | grep 2 | wc -l | grep 2 -q && expr `wc -l facecounts` = 3 && echo Two pair!
 
 # The next line controls whether to print "Three of a kind!"
 # Hint: In this case facecounts would have 3 lines. <= But so would 2-pair
 # Hint: facecounts would have a '3'
-expr `cat facecounts | grep 3 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 &>/dev/null && echo Three of a kind!
-#expr `cat facecounts | grep 3 | wc -l` = 1 && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 && echo Three of a kind!
+#expr `cat facecounts | grep 3 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 &>/dev/null && echo Three of a kind!
+expr `cat facecounts | grep 3 | wc -l` = 1 |& cat>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 3 |& cat >/dev/null && echo Three of a kind!
 #cat facecounts | grep 3 | wc -l | grep 3 -q && expr `wc -l facecounts` = 3 && echo Three of a kind!
 
 # The next line controls whether to print "Four of a kind!"
 # Hint: In this case facecounts would have 2 lines. <= But so would full-house
 # Hint: facecounts would have a '4'
-expr `cat facecounts | grep 4 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 &>/dev/null && echo Four of a kind!
-#expr `cat facecounts | grep 4 | wc -l` = 1 && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 |& /dev/null && echo Four of a kind!
+#expr `cat facecounts | grep 4 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 &>/dev/null && echo Four of a kind!
+expr `cat facecounts | grep 4 | wc -l` = 1 |& cat>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 |& cat >/dev/null && echo Four of a kind!
 #cat facecounts | grep 4 | wc -l | grep 4 -q && expr `wc -l facecounts` = 2 && echo Four of a kind!
 
 # The next line controls whether to print "Full house!"
 # Hint: In this case facecounts would have 2 lines. <= But so would 4-of-a-kind
 # Hint: facecounts would have a '3'
-expr `cat facecounts | grep 3 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 &>/dev/null && echo Full house!
+#expr `cat facecounts | grep 3 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 &>/dev/null && echo Full house!
+expr `cat facecounts | grep 3 | wc -l` = 1 |& cat>/dev/null && expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 2 |& cat >/dev/null && echo Full house!
 #cat facecounts | grep 3 | wc -l | grep 1 -q && expr `wc -l facecounts` = 2 && echo Full house!
 
 # The next line controls whether to print "Straight!" (which means that all of)
@@ -159,13 +160,14 @@ expr `cat facecounts | grep 3 | wc -l` = 1 &>/dev/null && expr `wc -l facecounts
 # in order to test whether the value difference between the high card and low
 # the card is 4. In that case, you have a straight.
 # Q: "Do I have to use expr, ``, sort, tail, and head?"  A: "Yes."
-expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 &>/dev/null && expr `sort -g faces | tail -n 1` - `sort -g faces | head -n 1` = 4 &>/dev/null && echo Straight!
+#expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 &>/dev/null && expr `sort -g faces | tail -n 1` - `sort -g faces | head -n 1` = 4 &>/dev/null && echo Straight!
+expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 |& cat>/dev/null && expr `sort -g faces | tail -n 1` - `sort -g faces | head -n 1` = 4 |& cat>/dev/null && echo Straight!
 #expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 && expr `sort -g faces | tail -n 1` - `sort -g faces | head -n 1` = 4 && echo Straight!
 
 #This final line handles the ace-low straight (14, 2, 3, 4, 5). Implement it
 #any way that you want, but only using commands from lectures 1-4 
-expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 &>/dev/null && sort -g faces | head -n 1 | grep -q 2 && sort -g faces | tail -n 2 | grep -q 14 && sort -g faces | tail -n 2 | grep -q 5 && echo Straight!
-#expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 && sort -g faces | head -n 1 | grep -q 2 && sort -g faces | tail -n 2 | grep -q 14 && sort -g faces | tail -n 2 | grep -q 5 && echo Straight!
+#expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 &>/dev/null && sort -g faces | head -n 1 | grep -q 2 && sort -g faces | tail -n 2 | grep -q 14 && sort -g faces | tail -n 2 | grep -q 5 && echo Straight!
+expr `wc -l facecounts | cut -f 1 --delimiter=' '` = 5 |& cat>/dev/null && sort -g faces | head -n 1 | grep -q 2 && sort -g faces | tail -n 2 | grep -q 14 && sort -g faces | tail -n 2 | grep -q 5 && echo Straight!
 
 
 #And that is the end of your script. You will notice that there is no output for
