@@ -8,7 +8,7 @@
 #print messages for straights and for matching cards (eg three-of-a-kind).
 
 
-#In this assignment: only use commands from Lectures 1-4, and don't use any ";".
+#n this assignment: only use commands from Lectures 1-4, and don't use any ";".
 #When filling in the blanks indicated below, you may use any piping sequence
 #of commands, and you may use "&&" and "||". So, for example, if you saw:
 #  __________________ echo forexample
