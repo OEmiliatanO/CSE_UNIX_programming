@@ -36,33 +36,32 @@ switch ( `echo $faces[*] | tr " " "\n" | sort -gr | tr -d "0\n"` )
                 if ( $faces[$i] != 0 ) then
                     switch ($i)
                         case 13:
-                            echo Ace high! ;breaksw
+                            echo Ace high! ;exit 0
                         case 12:
-                            echo King high! ;breaksw
+                            echo King high! ;exit 0
                         case 11:
-                            echo Queen high! ;breaksw
+                            echo Queen high! ;exit 0
                         case 10:
-                            echo Jack high! ;breaksw
+                            echo Jack high! ;exit 0
                         case 9:
-                            echo Ten high! ;breaksw
+                            echo Ten high! ;exit 0
                         case 8:
-                            echo Nine high! ;breaksw
+                            echo Nine high! ;exit 0
                         case 7:
-                            echo Eight high! ;breaksw
+                            echo Eight high! ;exit 0
                         case 6:
-                            echo Seven high! ;breaksw
+                            echo Seven high! ;exit 0
                         case 5:
-                            echo Six high! ;breaksw
+                            echo Six high! ;exit 0
                         case 4:
-                            echo Five high! ;breaksw
+                            echo Five high! ;exit 0
                         case 3:
-                            echo Four high! ;breaksw
+                            echo Four high! ;exit 0
                         case 2:
-                            echo Three high! ;breaksw
+                            echo Three high! ;exit 0
                         case 1:
-                            echo Two high! ;breaksw
+                            echo Two high! ;exit 0
                     endsw
-                    break
                 endif
             end
         endif
