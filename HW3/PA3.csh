@@ -2,7 +2,7 @@
 set faces = (0 0 0 0 0 0 0 0 0 0 0 0 0)
 set suits = (0 0 0 0)
 set suitsym = (♦ ♥ ♠ ♣)
-foreach i (`seq 1 51 | sort -R | head -n 5 | sort -g`)
+foreach i (`seq 0 51 | sort -R | head -n 5 | sort -g`)
     @ su = 1 + ( $i / 13 )
     @ fa = 1 + ( $i % 13 )
     echo -n \  `echo  $fa | grep 1. | cut -c 2 | tr "0123" "JQKA" || expr $fa + 1`$suitsym[$su]
@@ -24,8 +24,8 @@ switch ( `echo $faces[*] | tr " " "\n" | sort -gr | tr -d "0\n"` )
     case 11111:
 
         set flush = ""
-        if ( `echo $suits[*] | grep 5` ) set flush = \ Flush!
-        if ( `echo $faces[*]`  =~ '1 1 1 1 1' ) then
+        if ( `echo $suits[*] | grep -o 5` == '5') set flush = \ Flush!
+        if ( `echo $faces[*]`  =~ '*1 1 1 1 1*' ) then
             echo Straight$flush!
         else if ( `echo $faces[1] $faces[2] $faces[3] $faces[4] $faces[13]`  == '1 1 1 1 1' ) then
             echo Straight$flush!
