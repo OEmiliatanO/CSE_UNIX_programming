@@ -24,7 +24,7 @@ switch ( `echo $faces[*] | tr " " "\n" | sort -gr | tr -d "0\n"` )
     case 11111:
 
         set flush = ""
-        if ( `echo $suits[*] | grep -o 5` == '5') set flush = \ Flush!
+        if ( `echo $suits[*]` =~ '*5*') set flush = \ Flush!
         if ( `echo $faces[*]`  =~ '*1 1 1 1 1*' ) then
             echo Straight$flush!
         else if ( `echo $faces[1] $faces[2] $faces[3] $faces[4] $faces[13]`  == '1 1 1 1 1' ) then
@@ -44,23 +44,23 @@ switch ( `echo $faces[*] | tr " " "\n" | sort -gr | tr -d "0\n"` )
                         case 10:
                             echo Jack high! ;exit 0
                         case 9:
-                            echo Ten high! ;exit 0
+                            echo 10 high! ;exit 0
                         case 8:
-                            echo Nine high! ;exit 0
+                            echo 9 high! ;exit 0
                         case 7:
-                            echo Eight high! ;exit 0
+                            echo 8 high! ;exit 0
                         case 6:
-                            echo Seven high! ;exit 0
+                            echo 7 high! ;exit 0
                         case 5:
-                            echo Six high! ;exit 0
+                            echo 6 high! ;exit 0
                         case 4:
-                            echo Five high! ;exit 0
+                            echo 5 high! ;exit 0
                         case 3:
-                            echo Four high! ;exit 0
+                            echo 4 high! ;exit 0
                         case 2:
-                            echo Three high! ;exit 0
+                            echo 3 high! ;exit 0
                         case 1:
-                            echo Two high! ;exit 0
+                            echo 2 high! ;exit 0
                     endsw
                 endif
             end
