@@ -1,0 +1,31 @@
+The next homework will use sed and will have two parts.
+The first part, PA5a.sed must use only sed commands we learned in lecture 8.
+It prints the 5 cards in the hand and detects if they are either a Flush or
+Four of a kind.
+
+The second part of the homework will use ideas from lecture 9, so you won't
+get that part of the assignment until after we attend class for lecture 9.
+
+The assignment will be turned in together, but you can start on the first
+part now, since it is only allowed to use lecture 8 material.
+
+You will notice three other files included with this README file:
+
+    % ls
+    PA5atemplate.sed  README  UNIXPA5a.png  allcards
+    %
+
+allcards is the same file as in the earlier homeworks.
+
+PA5atemplate.sed is a template on how to do the first part of the assignment.
+
+UNIXPA5a.png is a screeshot of how your program should work. You will notice
+that it uses some sed syntax from Lecture 9 to get specific sets of 5 cards.
+This isn't a real issue, however, because of three reasons. 1) It's code I'm
+giving you, so you can type it even if you haven't learned Lecture 9. 2) We
+will get to Lecture 9 quite soon, and then it will make sense. 3) The real
+way that the game would really be played is shown on the last line of the
+screenshot: "sort -R allcards | head -5 | sort -g" -- which doesn't require
+the use of any sed.
+
+
