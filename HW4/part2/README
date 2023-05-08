@@ -1,0 +1,21 @@
+The present file is the second part of a 3-part homework, that
+will all be turned in together.
+
+Part 1 had involved writing a sed program to identify flushes
+and four-of-a-kinds. (Part 3 will complete that sed program,
+to identify the other situations -- but I have not yet given
+you the instructions on how to implement it.)
+
+As for this present Part 2, it involves filling in the blanks
+in the testertemplate.csh script:
+  % ls
+  README  allcards  testeroutput.png  testertemplate.csh
+  %
+
+You should fill in the blanks according to the instructions
+given in the template, then remove all of the comments, then
+rename the file to "tester.csh", then make it an executable.
+
+Also provided is testeroutput.png, which shows the expected
+output behavior.
+
