@@ -4,24 +4,24 @@
 ./topface $f
 switch ( $1 )
    case "[Rr]*":
-      cat allcards | sort -R | sed 1,5p # prints first 5 lines
+      cat allcards | sort -R | sed -n 1,5p # prints first 5 lines
       exit
    case "[Ff]*":
-      @ suit = `seq 1 40 | sed -n 1,14,27,40p | sort -R | head -1` #Use seq, sort & head to randomly choose from 1, 14, 27 & 40
+      @ suit = `seq 1 40 | sed -n '1p; 14p; 27p; 40p' | sort -R | head -1` #Use seq, sort & head to randomly choose from 1, 14, 27 & 40
 
       #Now, the value of "suit" is the line number of "allcards" on which one
       #suit begins. And the next 12 lines of "allcards" will also be that suit.
-
-      cat allcards | sed -n ______ | sort -R | sed 5q
+	  
+      cat allcards | sed -n $suit,`expr $suit + 12`p | sort -R | sed 5q
       #The above _____ is a sed program to select the 13 lines of the "suit".
       #This must be achieved using expr, and using sed's "," range operator.
       exit
    case "[Ss]*":
-      @ f = ___ # Use seq, sort & head to create a random number from 1 and 8
+      @ f = `seq 1 8 | sort -R | head -1` # Use seq, sort & head to create a random number from 1 and 8
       set h
       foreach i ( `seq 0 4`)
-         @ suit = __________ # This is the same as the earlier "@ suit =" line. 
-         set h = ( $h ____ ) # Add next card to the straight, using above suit. 
+         @ suit = `seq 1 40 | sed -n '1p; 14p; 27p; 40p' | sort -R | head -1` # This is the same as the earlier "@ suit =" line. 
+         set h = ( $h $suit ) # Add next card to the straight, using above suit. 
       end
       echo $h | tr " " "\n" | sort -R > nums
       breaksw
@@ -65,6 +65,6 @@ endsw
 
 # The first 5 lines of the "nums" file represent line numbers in the "allcards"
 # file. The following ________ will produce a sed program to print those lines.
-sed -n `head -5 nums|sed _______________________________` allcards
+sed -n `head -5 nums | sed -n 's/\([0-9]\{1,\}\)/\1p\;/g; H; g; s/\n//g; h;/\([0-9]\{1,2\}p;\)\{5\}/ p;'` allcards
 
 rm nums
