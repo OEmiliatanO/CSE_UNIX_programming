@@ -21,7 +21,7 @@ switch ( $1 )
       set h
       foreach i ( `seq 0 4`)
          @ suit = `seq 1 40 | sed -n '1p; 14p; 27p; 40p' | sort -R | head -1` # This is the same as the earlier "@ suit =" line. 
-         set h = ( $h $suit ) # Add next card to the straight, using above suit. 
+         set h = ( $h `expr $suit + $f + $i` ) # Add next card to the straight, using above suit. 
       end
       echo $h | tr " " "\n" | sort -R > nums
       breaksw
@@ -65,6 +65,8 @@ endsw
 
 # The first 5 lines of the "nums" file represent line numbers in the "allcards"
 # file. The following ________ will produce a sed program to print those lines.
+#head -5 nums
+#head -5 nums | sed -n 'l; s/\([0-9]\{1,\}\)/\1p\;/g; l; H; g; l; s/\n//g; l; h;/\([0-9]\{1,2\}p;\)\{5\}/ p;'
 sed -n `head -5 nums | sed -n 's/\([0-9]\{1,\}\)/\1p\;/g; H; g; s/\n//g; h;/\([0-9]\{1,2\}p;\)\{5\}/ p;'` allcards
 
 rm nums
