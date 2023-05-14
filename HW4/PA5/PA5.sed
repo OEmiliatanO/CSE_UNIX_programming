@@ -1,13 +1,11 @@
 #!/usr/bin/sed -nf
-s/\(.\{2\}\)\(.\{23,24\}\)/\2\n\1/; /.*\n/ P; //D;
-H;
-//d;
+s/\([2-9TJQKA][DSHC]\)\(.\{23,24\}\)/\2\n\1/; /.*\n/ P; //D; H; x; s/\n//g; x;
 
-G; s/^....//
+g
 :J;tJ
-s/.\([DSHC]\).\(.\1.\)\{3\}\(.\1\)$/Flush/p
-s/..\n\([2-9TJQKA]\).\n\(\1.\n\)\{2\}\(\1.\)$/Four of a kind/p
-s/\([2-9TJQKA]\).\n\(\1.\n\)\{3\}..$/Four of a kind/p
+s/.\([DSHC]\)\(.\1\)\{3\}\(.\1\)$/Flush/p
+s/..\([2-9TJQKA]\).\(\1.\)\{2\}\(\1.\)$/Four of a kind/p
+s/\([2-9TJQKA]\).\(\1.\)\{3\}..$/Four of a kind/p
 
 /$/! d
 
@@ -18,7 +16,7 @@ be
 ta
 
 # del suits
-s/[DSHC]\(\n\|$\)//g
+s/[DSHC]//g
 
 # branch if no three identical numbers
 /\([2-9TJQKA]\)\1\1/! bo
