@@ -7,7 +7,7 @@ s/.\([DSHC]\)\(.\1\)\{4\}$/Flush/p
 s/..\([2-9TJQKA]\).\(\1.\)\{3\}$/Four of a kind/p
 s/\([2-9TJQKA]\).\(\1.\)\{3\}..$/Four of a kind/p
 
-/$/! d
+$! d
 
 # flush or four of a kind
 be
@@ -22,12 +22,10 @@ s/[DSHC]//g
 /\([2-9TJQKA]\)\1\1/! bo
 # AAABB
 # BBAAA
-/\(\([2-9TJQKA]\)\2\2\([2-9TJQKA]\)\3\|\([2-9TJQKA]\)\4\([2-9TJQKA]\)\5\5\)/ c\
+/\([2-9TJQKA]\)\1.\([2-9TJQKA]\)\2/ c\
 Full house
-# AAABC
-# BAAAC
-# BCAAA
-/\(\([2-9TJQKA]\)\2\2[2-9TJQKA]\{2\}\|[2-9TJQKA]\{2\}\([2-9TJQKA]\)\3\3\|[2-9TJQKA]\([2-9TJQKA]\)\4\4[2-9TJQKA]\)/ c\
+
+c\
 Three of a kind
 :o
 
@@ -36,13 +34,10 @@ Three of a kind
 # AABBC
 # AACBB
 # CAABB
-/\(\([2-9TJQKA]\)\2\([2-9TJQKA]\)\3[2-9TJQKA]\{1\}\|\([2-9TJQKA]\)\4[2-9TJQKA]\{1\}\([2-9TJQKA]\)\5\|[2-9TJQKA]\{1\}\([2-9TJQKA]\)\6\([2-9TJQKA]\)\7\)/ c\
+/\([2-9TJQKA]\)\1.*\([2-9TJQKA]\)\2/ c\
 Two pair
-# AABCD
-# BAACD
-# BCAAD
-# BCDAA
-/\(\([2-9TJQKA]\)\2[2-9TJQKA]\{3\}\|[2-9TJQKA]\{1\}\([2-9TJQKA]\)\3[2-9TJQKA]\{2\}\|[2-9TJQKA]\{2\}\([2-9TJQKA]\)\4[2-9TJQKA]\{1\}\|[2-9TJQKA]\{3\}\([2-9TJQKA]\)\5\)/ c\
+
+c\
 One pair
 :k
 
@@ -58,7 +53,7 @@ Straight
 # AJKQT
 #The following line handles both: 9, T, J, Q, K and T, J, Q, K, A
 #Hint: Both "A" and "9" will sort earlier than 'J'.
-/\(9\|A\)JKQT/ c\
+/[9A]JKQT/ c\
 Straight
 
 #The following line handles: 8, 9, T, J, Q
