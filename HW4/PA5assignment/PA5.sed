@@ -3,8 +3,8 @@ s/\([2-9TJQKA][DSHC]\)\(.\{23,24\}\)/\2\n\1/; /.*\n/ P; //D; H; x; s/\n//g; x;
 
 g
 :J;tJ
-s/.\([DSHC]\)\(.\1\)\{3\}\(.\1\)$/Flush/p
-s/..\([2-9TJQKA]\).\(\1.\)\{2\}\(\1.\)$/Four of a kind/p
+s/.\([DSHC]\)\(.\1\)\{4\}$/Flush/p
+s/..\([2-9TJQKA]\).\(\1.\)\{3\}$/Four of a kind/p
 s/\([2-9TJQKA]\).\(\1.\)\{3\}..$/Four of a kind/p
 
 /$/! d
@@ -12,7 +12,7 @@ s/\([2-9TJQKA]\).\(\1.\)\{3\}..$/Four of a kind/p
 # flush or four of a kind
 be
 :a q;
-:e s/\(Flush\|Four of a kind\)/\1/
+:e
 ta
 
 # del suits
